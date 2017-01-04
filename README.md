@@ -1,3 +1,8 @@
+[![License][license]][license-url]
+
+[license-url]: http://choosealicense.com/licenses/mit/
+[license]: https://img.shields.io/github/license/hutchic/apistatus.svg
+
 Infinit.sh
 =========
 
