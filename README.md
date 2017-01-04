@@ -1,7 +1,6 @@
-[![License][license]][license-url]
+[![Travis Build Status](https://travis-ci.org/hutchic/ansible-infinit.sh.svg?branch=master)](https://travis-ci.org/hutchic/ansible-infinit.sh)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-[license-url]: http://choosealicense.com/licenses/mit/
-[license]: https://img.shields.io/github/license/hutchic/apistatus.svg
 
 Infinit.sh
 =========

@@ -18,5 +18,7 @@
   when: infinit_exists.stat.exists == False
 
 - include: setup_user.yml
+  tags: [infinit-configure]
 
 - include: server.yml
+  tags: [infinit-configure]
