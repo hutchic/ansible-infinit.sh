@@ -1,0 +1,15 @@
+[Unit]
+Description=infinit.sh volume
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+ExecStart=/opt/infinit/bin/infinit-volume --mount --as {{ infinit_user }} --name volume --mountpoint /mnt/infinit --allow-root-creation --cache --publish
+
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

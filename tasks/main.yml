@@ -1,0 +1,22 @@
+---
+- name: Install pip
+  become: yes
+  apt:
+    name: python-pip
+    update_cache: yes
+    state: present
+
+- name: Install pexpect
+  become: yes
+  pip:
+    name: pexpect
+
+- stat: path=/opt/infinit/bin/infinit-user
+  register: infinit_exists
+
+- include: install.yml
+  when: infinit_exists.stat.exists == False
+
+- include: setup_user.yml
+
+- include: server.yml

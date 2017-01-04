@@ -1,0 +1,14 @@
+---
+- name: start infinit-volume
+  become: yes
+  service:
+    name: infinit-volume
+    daemon_reload: yes
+    state: started
+
+- name: start infinit-network
+  become: yes
+  service:
+    name: infinit-network
+    daemon_reload: yes
+    state: started

@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-infinit
+infinit_user: user
+infinit_user_fullname: Infinit User

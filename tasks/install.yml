@@ -1,0 +1,45 @@
+- name: Install fuse and prerequisite packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - fuse
+    - software-properties-common
+    - apt-transport-https
+
+- name: Make sure wheel exists
+  become: yes
+  group:
+    name: wheel
+    state: present
+
+- name: Add ubuntu user to fuse group
+  become: yes
+  user:
+    name: ubuntu
+    groups: wheel
+    append: yes
+
+- name: Add inifinit apt key
+  become: yes
+  command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3D2C3B0B
+
+- name: Add inifinit repository
+  become: yes
+  command: add-apt-repository "deb https://debian.infinit.sh/ trusty main"
+
+- name: Install infinit
+  become: yes
+  apt:
+    name: infinit
+    update_cache: yes
+
+- name: Setup infinit in systemd
+  become: yes
+  template:
+    src: "templates/infinit-{{ item }}.service.j2"
+    dest: "/etc/systemd/system/infinit-{{ item }}.service"
+  with_items:
+    - network
+    - volume

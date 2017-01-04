@@ -1,0 +1,14 @@
+[Unit]
+Description=infinit.sh network
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+ExecStart=/opt/infinit/bin/infinit-network --run --as {{ infinit_user }} --name cluster --async --cache --publish
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,33 @@
+- name: Infinit user list
+  become: yes
+  command: /opt/infinit/bin/infinit-user --list
+  register: list
+
+- name: Infinit user login
+  become: yes
+  expect:
+    command: "/opt/infinit/bin/infinit-user --login --name {{ infinit_user }}"
+    responses:
+      (?i)password: "{{ infinit_hub_password }}"
+  ignore_errors: yes
+  register: login_result
+  when: list.stdout|length == 0
+  no_log: True
+
+- name: Infinit user signup
+  become: yes
+  expect:
+    command: "/opt/infinit/bin/infinit-user --signup --name {{ infinit_user }} --fullname {{ infinit_user_fullname }} --full"
+    responses:
+      (?i)password: "{{ infinit_hub_password }}"
+  when: login_result.rc == 1 and list is defined and list.stdout|length == 0
+  no_log: True
+
+- name: Infinit user login attempt 2
+  become: yes
+  expect:
+    command: "/opt/infinit/bin/infinit-user --login --name {{ infinit_user }}"
+    responses:
+      (?i)password: "{{ infinit_hub_password }}"
+  when: login_result.rc == 1 and list is defined and list.stdout|length == 0
+  no_log: True
