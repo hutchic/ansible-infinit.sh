@@ -2,7 +2,6 @@
   become: yes
   apt:
     name: "{{ item }}"
-    update_cache: yes
   with_items:
     - fuse
     - software-properties-common
