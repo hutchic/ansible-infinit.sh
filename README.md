@@ -20,6 +20,8 @@ infinit_user: "user"
 infinit_user_fullname: "Full Name"
 infinit_hub_password: "super secret password"
 infinit_volume_mount: "/mnt/infinit"
+infinit_volume_name: "volume"
+infinit_network_name: "network"
 ```
 
 Example Playbook

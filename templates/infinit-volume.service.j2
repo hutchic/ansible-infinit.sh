@@ -6,7 +6,7 @@ Type=simple
 User=ubuntu
 Group=ubuntu
 
-ExecStart=/opt/infinit/bin/infinit-volume --mount --as {{ infinit_user }} --name volume --mountpoint {{ infinit_volume_mount }} --allow-root-creation --cache --publish
+ExecStart=/opt/infinit/bin/infinit-volume --mount --as {{ infinit_user }} --name {{ infinit_volume_name }} --mountpoint {{ infinit_volume_mount }} --allow-root-creation --cache --publish
 
 Restart=always
 RestartSec=15

@@ -10,7 +10,7 @@
   when: storage.stdout|length==0
 
 - name: Fetch the network
-  command: "/opt/infinit/bin/infinit-network --fetch --as {{ infinit_user }} --name network"
+  command: "/opt/infinit/bin/infinit-network --fetch --as {{ infinit_user }} --name {{ infinit_network_name }}"
   ignore_errors: yes
   register: network
   notify:
@@ -21,31 +21,28 @@
   register: volume
 
 - name: Fetch the remote volume
-  command: "/opt/infinit/bin/infinit-volume --fetch --as {{ infinit_user }} --name volume"
+  command: "/opt/infinit/bin/infinit-volume --fetch --as {{ infinit_user }} --name {{ infinit_volume_name }}"
   notify:
     - start infinit-volume
   when: network|succeeded and volume.stdout|length==0
 
 - name: Link the network
-  command: "/opt/infinit/bin/infinit-network --link --as {{ infinit_user }} --name network --storage local"
+  command: "/opt/infinit/bin/infinit-network --link --as {{ infinit_user }} --name {{ infinit_network_name }} --storage local"
   notify:
     - start infinit-volume
   when: network|succeeded and volume.stdout|length==0
 
 - name: Create the network
-  command: "/opt/infinit/bin/infinit-network --create --as {{ infinit_user }} --storage local --name network --push"
+  command: "/opt/infinit/bin/infinit-network --create --as {{ infinit_user }} --storage local --name {{ infinit_network_name }} --push"
   notify:
     - start infinit-volume
   when: network|failed
 
 - name: Create the volume
-  command: "/opt/infinit/bin/infinit-volume --create --as {{ infinit_user }} --network network --name volume --push"
+  command: "/opt/infinit/bin/infinit-volume --create --as {{ infinit_user }} --network {{ infinit_network_name }} --name {{ infinit_volume_name }} --push"
   notify:
     - start infinit-volume
   when: network|failed and volume.stdout|length==0
 
 - meta: flush_handlers
   when: network|failed
-
-#client "/opt/infinit/bin/infinit-volume --mount --as {{ infinit_user }} --name shared --mountpoint /var/infinit --allow-root-creation --cache --publish"
-#server "/opt/infinit/bin/infinit-network --run --as {{ infinit_user }} --name cluster --publish"
