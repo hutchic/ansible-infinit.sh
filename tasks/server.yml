@@ -1,10 +1,8 @@
 - name: List local storage
-  become: yes
   command: /opt/infinit/bin/infinit-storage --list
   register: storage
 
 - name: Create local storage
-  become: yes
   command: /opt/infinit/bin/infinit-storage --create --filesystem --name local
   ignore_errors: yes
   notify:
@@ -12,7 +10,6 @@
   when: storage.stdout|length==0
 
 - name: Fetch the network
-  become: yes
   command: "/opt/infinit/bin/infinit-network --fetch --as {{ infinit_user }} --name network"
   ignore_errors: yes
   register: network
@@ -20,33 +17,28 @@
     - start infinit-volume
 
 - name: List local volume
-  become: yes
   command: /opt/infinit/bin/infinit-volume --list
   register: volume
 
 - name: Fetch the remote volume
-  become: yes
   command: "/opt/infinit/bin/infinit-volume --fetch --as {{ infinit_user }} --name volume"
   notify:
     - start infinit-volume
   when: network|succeeded and volume.stdout|length==0
 
 - name: Link the network
-  become: yes
   command: "/opt/infinit/bin/infinit-network --link --as {{ infinit_user }} --name network --storage local"
   notify:
     - start infinit-volume
   when: network|succeeded and volume.stdout|length==0
 
 - name: Create the network
-  become: yes
   command: "/opt/infinit/bin/infinit-network --create --as {{ infinit_user }} --storage local --name network --push"
   notify:
     - start infinit-volume
   when: network|failed
 
 - name: Create the volume
-  become: yes
   command: "/opt/infinit/bin/infinit-volume --create --as {{ infinit_user }} --network network --name volume --push"
   notify:
     - start infinit-volume
