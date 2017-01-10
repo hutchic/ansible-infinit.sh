@@ -3,8 +3,8 @@ Description=infinit.sh volume
 
 [Service]
 Type=simple
-User=root
-Group=root
+User=ubuntu
+Group=ubuntu
 
 ExecStart=/opt/infinit/bin/infinit-volume --mount --as {{ infinit_user }} --name volume --mountpoint {{ infinit_volume_mount }} --allow-root-creation --cache --publish
 
