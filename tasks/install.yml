@@ -8,19 +8,6 @@
     - software-properties-common
     - apt-transport-https
 
-- name: Make sure wheel exists
-  become: yes
-  group:
-    name: wheel
-    state: present
-
-- name: Add ubuntu user to fuse group
-  become: yes
-  user:
-    name: ubuntu
-    groups: wheel
-    append: yes
-
 - name: Add inifinit apt key
   become: yes
   command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3D2C3B0B

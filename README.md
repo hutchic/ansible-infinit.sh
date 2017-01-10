@@ -19,6 +19,7 @@ Role Variables
 infinit_user: "user"
 infinit_user_fullname: "Full Name"
 infinit_hub_password: "super secret password"
+infinit_volume_mount: "/mnt/infinit"
 ```
 
 Example Playbook

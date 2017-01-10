@@ -2,3 +2,4 @@
 # defaults file for ansible-infinit
 infinit_user: user
 infinit_user_fullname: Infinit User
+infinit_volume_mount: '/infinit'
