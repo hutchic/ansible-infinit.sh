@@ -4,7 +4,7 @@ Description=infinit.sh volume
 [Service]
 Type=simple
 User=ubuntu
-Group=ubuntu
+Group=wheel
 
 ExecStart=/opt/infinit/bin/infinit-volume --mount --fuse-option user_allow_other --as {{ infinit_user }} --name {{ infinit_volume_name }} --mountpoint {{ infinit_volume_mount }} --allow-root-creation --cache --publish
 

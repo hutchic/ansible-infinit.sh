@@ -12,3 +12,10 @@
     name: infinit-network
     daemon_reload: yes
     state: started
+
+- name: start infinit-deamon
+  become: yes
+  service:
+    name: infinit-daemon
+    daemon_reload: yes
+    state: started
