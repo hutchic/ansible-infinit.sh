@@ -22,6 +22,8 @@ infinit_hub_password: "super secret password"
 infinit_volume_mount: "/mnt/infinit"
 infinit_volume_name: "volume"
 infinit_network_name: "network"
+infinit_docker_user: "docker"
+infinit_run_daemon: "True"
 ```
 
 Example Playbook

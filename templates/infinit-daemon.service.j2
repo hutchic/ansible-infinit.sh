@@ -1,0 +1,14 @@
+[Unit]
+Description=infinit.sh daemon
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+ExecStart=/opt/infinit/bin/infinit-daemon --run --as {{ infinit_user }} --docker-user {{ infinit_docker_user }}
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
