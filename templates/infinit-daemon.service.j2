@@ -6,7 +6,7 @@ Type=simple
 User=root
 Group=root
 
-ExecStart=/opt/infinit/bin/infinit-daemon --run --as {{ infinit_user }} --docker-user {{ infinit_docker_user }}
+ExecStart=/opt/infinit/bin/infinit daemon run --as {{ infinit_user }} --docker-user {{ infinit_docker_user }}
 Restart=always
 RestartSec=5
 

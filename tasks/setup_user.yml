@@ -1,10 +1,10 @@
 - name: Infinit user list
-  command: /opt/infinit/bin/infinit-user --list
+  command: /opt/infinit/bin/infinit user list
   register: list
 
 - name: Infinit user login
   expect:
-    command: "/opt/infinit/bin/infinit-user --login --name {{ infinit_user }}"
+    command: "/opt/infinit/bin/infinit user login --name {{ infinit_user }}"
     responses:
       (?i)password: "{{ infinit_hub_password }}"
   ignore_errors: yes
@@ -14,7 +14,7 @@
 
 - name: Infinit user signup
   expect:
-    command: "/opt/infinit/bin/infinit-user --signup --name {{ infinit_user }} --fullname {{ infinit_user_fullname }} --full"
+    command: "/opt/infinit/bin/infinit user signup --name {{ infinit_user }} --fullname {{ infinit_user_fullname }} --full"
     responses:
       (?i)password: "{{ infinit_hub_password }}"
   when: login_result.rc == 1 and list is defined and list.stdout|length == 0
@@ -22,7 +22,7 @@
 
 - name: Infinit user login attempt 2
   expect:
-    command: "/opt/infinit/bin/infinit-user --login --name {{ infinit_user }}"
+    command: "/opt/infinit/bin/infinit user login --name {{ infinit_user }}"
     responses:
       (?i)password: "{{ infinit_hub_password }}"
   when: login_result.rc == 1 and list is defined and list.stdout|length == 0
