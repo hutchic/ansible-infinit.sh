@@ -1,45 +1,45 @@
 - name: List local storage
-  command: /opt/infinit/bin/infinit-storage --list
+  command: /opt/infinit/bin/infinit silo list
   register: storage
 
 - name: Create local storage
-  command: /opt/infinit/bin/infinit-storage --create --filesystem --name local
+  command: /opt/infinit/bin/infinit silo create --filesystem --name local
   ignore_errors: yes
   notify:
     - start infinit-volume
   when: storage.stdout|length==0
 
 - name: Fetch the network
-  command: "/opt/infinit/bin/infinit-network --fetch --as {{ infinit_user }} --name {{ infinit_network_name }}"
+  command: "/opt/infinit/bin/infinit network fetch --as {{ infinit_user }} --name {{ infinit_network_name }}"
   ignore_errors: yes
   register: network
   notify:
     - start infinit-volume
 
 - name: List local volume
-  command: /opt/infinit/bin/infinit-volume --list
+  command: /opt/infinit/bin/infinit volume list
   register: volume
 
 - name: Fetch the remote volume
-  command: "/opt/infinit/bin/infinit-volume --fetch --as {{ infinit_user }} --name {{ infinit_volume_name }}"
+  command: "/opt/infinit/bin/infinit volume fetch --as {{ infinit_user }} --name {{ infinit_volume_name }}"
   notify:
     - start infinit-volume
   when: network|succeeded and volume.stdout|length==0
 
 - name: Link the network
-  command: "/opt/infinit/bin/infinit-network --link --as {{ infinit_user }} --name {{ infinit_network_name }} --storage local"
+  command: "/opt/infinit/bin/infinit network link --as {{ infinit_user }} --name {{ infinit_network_name }} --storage local"
   notify:
     - start infinit-volume
   when: network|succeeded and volume.stdout|length==0
 
 - name: Create the network
-  command: "/opt/infinit/bin/infinit-network --create --as {{ infinit_user }} --storage local --name {{ infinit_network_name }} --push"
+  command: "/opt/infinit/bin/infinit network create --as {{ infinit_user }} --storage local --name {{ infinit_network_name }} --push"
   notify:
     - start infinit-volume
   when: network|failed
 
 - name: Create the volume
-  command: "/opt/infinit/bin/infinit-volume --create --as {{ infinit_user }} --network {{ infinit_network_name }} --name {{ infinit_volume_name }} --push"
+  command: "/opt/infinit/bin/infinit volume create --as {{ infinit_user }} --network {{ infinit_network_name }} --name {{ infinit_volume_name }} --push"
   notify:
     - start infinit-volume
   when: network|failed and volume.stdout|length==0

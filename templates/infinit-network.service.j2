@@ -6,7 +6,7 @@ Type=simple
 User=ubuntu
 Group=wheel
 
-ExecStart=/opt/infinit/bin/infinit-network --run --as {{ infinit_user }} --name cluster --async --cache --publish
+ExecStart=/opt/infinit/bin/infinit network run --as {{ infinit_user }} --name cluster --async --cache --publish
 Restart=always
 RestartSec=5
 
