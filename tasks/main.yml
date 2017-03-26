@@ -16,6 +16,15 @@
 - include: install.yml
   when: infinit_exists.stat.exists == False
 
+- name: Setup infinit in systemd
+  become: yes
+  template:
+    src: "templates/infinit-{{ item }}.service.j2"
+    dest: "/etc/systemd/system/infinit-{{ item }}.service"
+  with_items:
+    - network
+    - volume
+
 - include: setup_user.yml
   tags: [infinit-configure]
 

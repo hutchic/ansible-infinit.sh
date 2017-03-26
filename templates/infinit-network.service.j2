@@ -3,7 +3,7 @@ Description=infinit.sh network
 
 [Service]
 Type=simple
-User=ubuntu
+User=root
 Group=wheel
 
 ExecStart=/opt/infinit/bin/infinit network run --as {{ infinit_user }} --name cluster --async --cache --publish
